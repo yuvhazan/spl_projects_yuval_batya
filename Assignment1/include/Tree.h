@@ -16,6 +16,7 @@ public:
 private:
     int node;
     std::vector<Tree*> children;
+    void createBFS(const Session &session);
 }
 
 class CycleTree: public Tree{

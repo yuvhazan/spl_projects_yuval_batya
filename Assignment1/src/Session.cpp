@@ -5,7 +5,7 @@
 using json = nlohmann::json;
 using namespace std;
 
-Session::Session(const std::string &path) : infected(), g(vector < vector < int >> ()) {
+Session::Session(const std::string &path) : infected(), g(vector < vector < int >> ()), currCycle(0) {
     ifstream i(path);
     json j;
     j << i;
@@ -42,7 +42,7 @@ Session::Session(const std::string &path) : infected(), g(vector < vector < int 
 
 //copy constructor
 Session::Session(const Session &other) :
-        g(other.g), infected(other.infected), treeType(other.treeType), agents() {
+        g(other.g), infected(other.infected), treeType(other.treeType), agents(), currCycle(other.currCycle) {
     for (const auto agent: other.agents) {
         agents.push_back(agent.clone());
     }
@@ -54,6 +54,7 @@ const Session &Session::operator=(const Session &other) {
         g = other.g;
         infected = other.infected;
         treeType = other.treeType;
+        currCycle = other.currCycle;
 
         //delete current agents
         for (auto agent: agents)
@@ -70,7 +71,7 @@ const Session &Session::operator=(const Session &other) {
 
 //move constructor
 Session::Session(Session &&other)
-        : g(other.g), infected(other.infected), treeType(other.treeType), agents() {
+        : g(other.g), infected(other.infected), treeType(other.treeType), agents(), currCycle(other.currCycle) {
     for (auto &agent:other.agents) {
         agents.push_back(agent);
         agent = nullptr;
@@ -81,6 +82,7 @@ const Session &session::operator=(Session &&other) {
     g = other.g;
     infected = other.infected;
     treeType = other.treeType;
+    currCycle = other.currCycle;
 
     //delete current agents
     for (auto agent: agents)
@@ -116,7 +118,7 @@ void Session::setGraph(const Graph &graph) {
     g = graph;
 }
 
-void Session:: enqueueInfected(int toEnqueue){
+void Session::enqueueInfected(int toEnqueue) {
     infected.push(toEnqueue);
 }
 
