@@ -18,10 +18,16 @@ enum TreeType {
 
 class Session {
 public:
+
     Session(const std::string &path);
 
     //coy constructor
     Session(const Session &other);
+
+
+    Session(const std::string& path);
+    //copy constructor
+    Session(const Session& other);
 
     //copy assignment operator
     const Session &operator=(const Session &other);

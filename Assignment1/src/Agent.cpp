@@ -9,16 +9,18 @@ virtual void Virus::act(Session &session) {
     infect(); // TODO
 }
 
-virtual *Agent Virus:: clone(){
+virtual *
+
+Agent Virus::clone() {
     return new Virus(*this);
 }
 
 ContactTracer::ContactTracer() : Agent() {};
 
-virtual void ContactTracer:: act(Session& session){
+virtual void ContactTracer::act(Session &session) {
 }
 
-virtual *Agent ContactTracer:: clone(){
+virtual *Agent ContactTracer::clone() {
     return new ContactTracer(*this);
 }
 
