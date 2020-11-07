@@ -18,7 +18,7 @@ enum TreeType{
 class Session{
 public:
     Session(const std::string& path);
-    //coy constructor
+    //copy constructor
     Session(const Session& other);
     //copy assignment operator
     const Session& operator=(const Session &other);

@@ -77,6 +77,7 @@ Session::Session(Session &&other)
     }
 }
 
+//move assignment operator
 const Session &session::operator=(Session &&other) {
     g = other.g;
     infected = other.infected;
