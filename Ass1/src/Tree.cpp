@@ -72,7 +72,8 @@ const Tree &Tree::operator=(Tree &&other) {
 
 //destructor
 Tree::~Tree() {
-    for (auto child : children) {
+    for (Tree* child : children) {
+        cout<<child->getNode()<<" deleted"<<endl;
         delete (child);
     }
     children.clear();

@@ -9,16 +9,19 @@ Session::Session(const std::string &path) : infected(), g(vector<vector<int >>()
     ifstream i(path);
     json j;
     j << i;
+
+    g = Graph(j["graph"]);
+
     for (const auto &agent:j["agents"]) {
         string agentType(agent[0]);
-
         if (agentType == "V") {
-            agents.push_back(new Virus(agent[1]));
+            int vertex(agent[1]);
+            agents.push_back(new Virus(vertex));
+            g.setState(vertex, Carry);
         } else if (agentType == "C")
             agents.push_back(new ContactTracer());
     }
 
-    g = Graph(j["graph"]);
 
     string type = j["tree"];
     if (type == "M") {
@@ -75,6 +78,7 @@ const Session &Session::operator=(Session &&other) {
     treeType = other.treeType;
     currCycle = other.currCycle;
 
+
     //delete current agents
     for (auto agent: agents)
         delete (agent);
@@ -97,9 +101,18 @@ Session::~Session() {
 }
 
 void Session::simulate() {
-    cout << "simulate" << endl;
-    Tree *root = g.bfs(*this, 0);
-    cout << "trace: " << root->traceTree() << endl;
+    while (!g.isSatisfied()) {
+        size_t sizeOfCycle(agents.size());
+        for (size_t i(0); i < sizeOfCycle; i++)
+            agents[i]->act(*this);
+        currCycle++;
+    }
+    for (std::size_t i(0); i < g.getSize(); i++) {
+        cout << "vertex: " << i << " , state: " << g.getState(i) << endl;
+    }
+    cout << "cycle: " << currCycle << endl;
+    cout << "graph: " << endl;
+    g.print();
 }
 
 void Session::addAgent(const Agent &agent) {
@@ -127,6 +140,14 @@ int Session::dequeueInfected() {
 
 TreeType Session::getTreeType() const {
     return treeType;
+}
+
+Graph Session::getGraph() {
+    return g;
+}
+
+bool Session::infectedIsEmpty() {
+    return infected.empty();
 }
 
 

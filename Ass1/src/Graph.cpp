@@ -9,13 +9,18 @@
 
 using namespace std;
 
-Graph::Graph(std::vector<std::vector<int>> matrix) : edges(matrix) {
+Graph::Graph(std::vector<std::vector<int>> matrix) : edges(matrix), states(matrix.size(), Healthy) {
 }
 
-void Graph::infectNode(int nodeInd) {}
+void Graph::infectNode(int nodeInd) {
+    if (states[nodeInd] == Healthy) {
+        states[nodeInd] = Carry;
+    }
+}
+
 
 bool Graph::isInfected(int nodeInd) {
-    return true;
+    return states[nodeInd] == Infected;
 }
 
 vector<int> Graph::getNeighborsSorted(int v) {
@@ -52,4 +57,51 @@ Tree *Graph::bfs(Session &session, int rootLabel) {
         }
     }
     return root;
+}
+
+void Graph::disconnect(int toDisconnect) {
+    for (size_t neighbor(0); neighbor < edges.size(); neighbor++) {
+        edges[toDisconnect][neighbor] = 0;
+        edges[neighbor][toDisconnect] = 0;
+    }
+}
+
+int Graph::getSize() {
+    return edges.size();
+}
+
+NodeState Graph::getState(int v) {
+    return states[v];
+}
+
+void Graph::setState(int v, NodeState state) {
+    states[v] = state;
+}
+
+int Graph::getMinHealthy(int v) {
+    for (size_t i(0); i < edges.size(); i++)
+        if (edges[v][i] == 1 && states[i] == Healthy)
+            return i;
+    return -1;
+}
+
+bool Graph::isSatisfied() {
+    for (size_t i(0); i < edges.size(); i++) {
+        for (size_t j(i + 1); j < edges.size(); j++) {
+            if (edges[i][j] == 1) {
+                if (states[i] != states[j] || states[i] == Carry)
+                    return false;
+            }
+        }
+    }
+    return true;
+}
+
+void Graph::print() {
+    for (size_t i(0); i < edges.size(); i++) {
+        for (size_t j(0); j < edges.size(); j++) {
+            cout << edges[i][j];
+        }
+        cout << endl;
+    }
 }

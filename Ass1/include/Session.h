@@ -17,6 +17,8 @@ enum TreeType {
     Root
 };
 
+
+
 class Session {
 public:
 
@@ -37,7 +39,6 @@ public:
     //destructor
     virtual ~Session();
 
-
     void simulate();
 
     void addAgent(const Agent &agent);
@@ -50,13 +51,19 @@ public:
 
     TreeType getTreeType() const;
 
-    int getCurrCycle()const;
+    int getCurrCycle() const;
+
+    Graph getGraph();
+
+    bool infectedIsEmpty();
+
 
 private:
     Graph g;
     TreeType treeType;
     std::vector<Agent *> agents;
     std::queue<int> infected;
+
     int currCycle;
 };
 
