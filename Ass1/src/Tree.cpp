@@ -106,7 +106,7 @@ RootTree::RootTree(int rootLabel) : Tree(rootLabel) {}
 int CycleTree::traceTree() {
     int cycleNum = 0;
     Tree *currNode = this;
-    while (cycleNum < currCycle & currNode->getChildrenSize() != 0) {
+    while ((cycleNum < currCycle) && currNode->getChildrenSize() != 0) {
         currNode = currNode->getChildren()[0];
         cycleNum++;
     }

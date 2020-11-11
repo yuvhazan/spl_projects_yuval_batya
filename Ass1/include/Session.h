@@ -63,7 +63,6 @@ private:
     TreeType treeType;
     std::vector<Agent *> agents;
     std::queue<int> infected;
-
     int currCycle;
 };
 

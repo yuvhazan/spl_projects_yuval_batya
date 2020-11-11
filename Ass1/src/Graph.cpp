@@ -49,6 +49,7 @@ Tree *Graph::bfs(Session &session, int rootLabel) {
                 visited[neighbor] = true;
                 Tree *child = Tree::createTree(session, neighbor);
                 curr->addChild(*child);
+                delete (child);
             }
         }
         vector<Tree *> allChildren = curr->getChildren();
