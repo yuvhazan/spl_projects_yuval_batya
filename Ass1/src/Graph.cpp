@@ -3,9 +3,7 @@
 //
 #include "../include/Graph.h"
 #include "../include/Session.h"
-#include "../include/Tree.h"
 #include <queue>
-#include <iostream>
 
 using namespace std;
 
@@ -67,10 +65,6 @@ void Graph::disconnect(int toDisconnect) {
     }
 }
 
-int Graph::getSize() {
-    return edges.size();
-}
-
 NodeState Graph::getState(int v) {
     return states[v];
 }
@@ -98,11 +92,14 @@ bool Graph::isSatisfied() {
     return true;
 }
 
-void Graph::print() {
-    for (size_t i(0); i < edges.size(); i++) {
-        for (size_t j(0); j < edges.size(); j++) {
-            cout << edges[i][j];
-        }
-        cout << endl;
-    }
+vector<vector<int>> Graph::getEdges() {
+    return edges;
+}
+
+vector<int> Graph::getInfected() {
+    vector<int> output;
+    for (size_t i(0); i < edges.size(); i++)
+        if (this->isInfected(i))
+            output.push_back(i);
+    return output;
 }

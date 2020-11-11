@@ -29,8 +29,6 @@ public:
 
     void disconnect(int toDisconnect);
 
-    int getSize();
-
     NodeState getState(int v);
 
     void setState(int v, NodeState state);
@@ -39,10 +37,12 @@ public:
 
     bool isSatisfied();
 
-    void print();
+    vector<vector<int>> getEdges();
+
+    vector<int>getInfected();
 
 private:
-    vector<std::vector<int>> edges;
+    vector <std::vector<int>> edges;
 
     vector<int> getNeighborsSorted(int v);
 

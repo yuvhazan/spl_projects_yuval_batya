@@ -4,9 +4,6 @@
 #include <vector>
 #include "Session.h"
 
-
-
-
 class Session;
 
 class Tree;

@@ -2,7 +2,9 @@
 #define TREE_H_
 
 #include <vector>
+#include <queue>
 #include <iostream>
+#include "Session.h"
 
 class Session;
 class Tree {

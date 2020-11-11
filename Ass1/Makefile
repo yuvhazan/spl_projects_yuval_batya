@@ -3,7 +3,7 @@ all: cTrace
 
 cTrace: bin/Main.o bin/Session.o bin/Agent.o bin/Graph.o bin/Tree.o
 	@echo 'Building target: cTrace'
-	g++ -o bin/cTrace bin/Main.o bin/Session.o bin/Agent.o bin/Graph.o bin/Tree.o 
+	g++ -o bin/cTrace bin/Main.o bin/Session.o bin/Agent.o bin/Graph.o bin/Tree.o
 	@echo 'Finished building target: cTrace'
 
 # Depends on the source and header files

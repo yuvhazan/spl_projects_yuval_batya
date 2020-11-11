@@ -1,11 +1,9 @@
 #include "../include/Session.h"
-#include <iostream>
-#include <fstream>
 
 using json = nlohmann::json;
 using namespace std;
 
-Session::Session(const std::string &path) :g(vector<vector<int >>()) , currCycle(0) {
+Session::Session(const std::string &path) : g(vector<vector<int >>()), currCycle(0) {
     ifstream i(path);
     json j;
     i >> j;
@@ -35,7 +33,7 @@ Session::Session(const std::string &path) :g(vector<vector<int >>()) , currCycle
 
 //copy constructor
 Session::Session(const Session &other) :
-        g(other.g), treeType(other.treeType), infected(other.infected) , currCycle(other.currCycle) {
+        g(other.g), treeType(other.treeType), infected(other.infected), currCycle(other.currCycle) {
     for (const auto agent: other.agents) {
         agents.push_back(agent->clone());
     }
@@ -50,7 +48,7 @@ const Session &Session::operator=(const Session &other) {
         currCycle = other.currCycle;
 
         //delete current agents
-        for (Agent* agent: agents)
+        for (Agent *agent: agents)
             delete (agent);
         agents.clear();
 
@@ -107,12 +105,7 @@ void Session::simulate() {
             agents[i]->act(*this);
         currCycle++;
     }
-    for (int i(0); i < g.getSize(); i++) {
-        cout << "vertex: " << i << " , state: " << g.getState(i) << endl;
-    }
-    cout << "cycle: " << currCycle << endl;
-    cout << "graph: " << endl;
-    g.print();
+    this->writeToJson();
 }
 
 void Session::addAgent(const Agent &agent) {
@@ -148,6 +141,14 @@ Graph Session::getGraph() {
 
 bool Session::infectedIsEmpty() {
     return infected.empty();
+}
+
+void Session::writeToJson() {
+    json j;
+    j["graph"] = g.getEdges();
+    j["infected"] = g.getInfected();
+    ofstream o("output.json");
+    o << j ;
 }
 
 

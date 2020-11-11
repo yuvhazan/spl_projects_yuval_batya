@@ -17,6 +17,14 @@ vector
 -
 queue
 -
+../include/Session.h
+/home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/include/Session.h
+../include/Tree.h
+/home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/include/Tree.h
+queue
+-
+iostream
+-
 
 /home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/include/Session.h
 vector
@@ -33,6 +41,10 @@ Agent.h
 /home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/include/Agent.h
 Tree.h
 /home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/include/Tree.h
+iostream
+-
+fstream
+-
 
 /home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/include/Tree.h
 vector
@@ -381,22 +393,10 @@ type_traits
 /home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/src/Graph.cpp
 ../include/Graph.h
 /home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/include/Graph.h
-../include/Session.h
-/home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/include/Session.h
-../include/Tree.h
-/home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/include/Tree.h
-queue
--
-iostream
--
 
 /home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/src/Session.cpp
 ../include/Session.h
 /home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/include/Session.h
-iostream
--
-fstream
--
 
 /home/spl211/CLionProjects/spl_projects_yuval_batya/Ass1/src/Tree.cpp
 ../include/Tree.h

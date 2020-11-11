@@ -1,3 +1,4 @@
+
 #ifndef SESSION_H_
 #define SESSION_H_
 
@@ -8,6 +9,8 @@
 #include "json.hpp"
 #include "Agent.h"
 #include "Tree.h"
+#include <iostream>
+#include <fstream>
 
 class Agent;
 
@@ -56,6 +59,9 @@ public:
     Graph getGraph();
 
     bool infectedIsEmpty();
+
+    void writeToJson();
+
 
 
 private:

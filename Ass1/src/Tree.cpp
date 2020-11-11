@@ -1,6 +1,5 @@
 #include "../include/Tree.h"
-#include <queue>
-#include "../include/Session.h"
+
 
 using namespace std;
 
@@ -72,10 +71,8 @@ const Tree &Tree::operator=(Tree &&other) {
 
 //destructor
 Tree::~Tree() {
-    for (Tree* child : children) {
-        cout<<child->getNode()<<" deleted"<<endl;
+    for (Tree *child : children)
         delete (child);
-    }
     children.clear();
 }
 
