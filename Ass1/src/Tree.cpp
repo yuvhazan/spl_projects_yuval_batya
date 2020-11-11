@@ -78,6 +78,10 @@ Tree::~Tree() {
     children.clear();
 }
 
+int Tree::getNode() const {
+    return node;
+}
+
 
 Tree *CycleTree::clone() const {
     return new CycleTree(*this);
@@ -103,11 +107,28 @@ int CycleTree::traceTree() {
 }
 
 int MaxRankTree::traceTree() {
-    return 0;
+    queue<Tree *> childrenQueue;
+    childrenQueue.push(this);
+    int maxDegNode = -1;
+    int deg = -1;
+    while (!childrenQueue.empty()) {
+        Tree *curr = childrenQueue.front();
+        childrenQueue.pop();
+        if (curr->getChildrenSize() > deg) {
+            maxDegNode = curr->getNode();
+            deg = curr->getChildrenSize();
+        }
+        vector<Tree*>childrens = curr->getChildren();
+        for (Tree *child : childrens) { // push children to queue
+            childrenQueue.push(child);
+            cout << (*child).getNode() << " pushed" << endl;
+        }
+    }
+    return maxDegNode;
 }
 
 int RootTree::traceTree() {
-    return 0;
+    return node;
 }
 
 void Tree::addChild(const Tree &child) {

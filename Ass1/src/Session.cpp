@@ -22,7 +22,6 @@ Session::Session(const std::string &path) : infected(), g(vector<vector<int >>()
 
     string type = j["tree"];
     if (type == "M") {
-
         treeType = MaxRank;
     } else if (type == "R") {
         treeType = Root;
@@ -33,7 +32,7 @@ Session::Session(const std::string &path) : infected(), g(vector<vector<int >>()
 
 //copy constructor
 Session::Session(const Session &other) :
-        g(other.g), infected(other.infected), treeType(other.treeType), agents(), currCycle(other.currCycle) {
+        g(other.g), infected(other.infected), treeType(other.treeType), currCycle(other.currCycle) {
     for (const auto agent: other.agents) {
         agents.push_back(agent->clone());
     }
@@ -99,6 +98,10 @@ Session::~Session() {
 
 void Session::simulate() {
     cout << "simulate" << endl;
+    Tree *root = g.bfs(*this, 0);
+    cout << "tree type is " << treeType << endl;
+    cout << "pleas it will be one : " << root->traceTree() << "!!!!!!!!!" << endl;
+    cout << "done bfs for 0!!!!" << endl;
 }
 
 void Session::addAgent(const Agent &agent) {

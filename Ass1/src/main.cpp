@@ -10,6 +10,6 @@ int main(int argc, char **argv) {
     }
     Session sess(argv[1]);
     sess.simulate();
-    cout << "it is working" << endl;
+    cout << "it is working!" << endl;
     return 0;
 }

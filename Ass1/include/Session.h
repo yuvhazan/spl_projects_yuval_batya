@@ -7,6 +7,7 @@
 #include "Graph.h"
 #include "json.hpp"
 #include "Agent.h"
+#include "Tree.h"
 
 class Agent;
 

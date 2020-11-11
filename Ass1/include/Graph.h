@@ -8,6 +8,8 @@ class Tree;
 
 class Session;
 
+using namespace std;
+
 class Graph {
 public:
     Graph(std::vector<std::vector<int>> matrix);
@@ -16,10 +18,12 @@ public:
 
     bool isInfected(int nodeInd);
 
-    Tree *bfs(Session &session);
+    Tree *bfs(Session &session , int rootLabel);
 
 private:
-    std::vector<std::vector<int>> edges;
+    vector<std::vector<int>> edges;
+
+    vector<int> getNeighborsSorted(int v);
 };
 
 #endif

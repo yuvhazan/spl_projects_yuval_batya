@@ -5,7 +5,7 @@
 using namespace std;
 
 Tree *Tree::createTree(const Session &session, int rootLabel) {
-    swith(session.getTreeType())
+    switch(session.getTreeType())
     {
         case Cycle:
             return new CycleTree(rootLabel, session.getCurrCycle());

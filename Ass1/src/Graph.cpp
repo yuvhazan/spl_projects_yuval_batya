@@ -5,6 +5,7 @@
 #include "../include/Session.h"
 #include "../include/Tree.h"
 #include <queue>
+#include <iostream>
 
 using namespace std;
 
@@ -17,16 +18,35 @@ bool Graph::isInfected(int nodeInd) {
     return true;
 }
 
-Tree *Graph::bfs(Session &session) {
-    vector<bool> visited(edges.size(),false);
+vector<int> Graph::getNeighborsSorted(int v) {
+    vector<int> output;
+    for (size_t i(0); i < edges.size(); i++) {
+        if (edges[v][i] == 1) {
+            output.push_back(i);
+        }
+    }
+    return output;
+}
+
+Tree *Graph::bfs(Session &session, int rootLabel) {
+    Tree *root = Tree::createTree(session, rootLabel);
     queue<Tree *> bfsQueue;
-    int from = session.dequeueInfected();
-    Tree *root = Tree::createTree(session, from);
-    Tree* curr;
     bfsQueue.push(root);
+    vector<bool> visited(edges.size(), false);
+    visited[rootLabel] = true;
     while (!bfsQueue.empty()) {
-        curr=bfsQueue.front();
+        Tree *curr = bfsQueue.front();
         bfsQueue.pop();
+        int currLabel = curr->getNode();
+        vector<int> neighbors = getNeighborsSorted(currLabel);
+        for (int neighbor: neighbors) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                Tree *child = Tree::createTree(session, neighbor);
+                curr->addChild(*child);
+                bfsQueue.push(child);
+            }
+        }
     }
     return root;
 }
