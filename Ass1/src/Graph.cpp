@@ -44,8 +44,11 @@ Tree *Graph::bfs(Session &session, int rootLabel) {
                 visited[neighbor] = true;
                 Tree *child = Tree::createTree(session, neighbor);
                 curr->addChild(*child);
-                bfsQueue.push(child);
             }
+        }
+        vector<Tree *> allChildren = curr->getChildren();
+        for (Tree *child:allChildren) {
+            bfsQueue.push(child);
         }
     }
     return root;

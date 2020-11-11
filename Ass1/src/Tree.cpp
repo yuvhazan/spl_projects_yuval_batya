@@ -103,7 +103,13 @@ MaxRankTree::MaxRankTree(int rootLabel) : Tree(rootLabel) {}
 RootTree::RootTree(int rootLabel) : Tree(rootLabel) {}
 
 int CycleTree::traceTree() {
-    return 0;
+    int cycleNum = 0;
+    Tree *currNode = this;
+    while (cycleNum < currCycle & currNode->getChildrenSize() != 0) {
+        currNode = currNode->getChildren()[0];
+        cycleNum++;
+    }
+    return currNode->getNode();
 }
 
 int MaxRankTree::traceTree() {
@@ -118,10 +124,9 @@ int MaxRankTree::traceTree() {
             maxDegNode = curr->getNode();
             deg = curr->getChildrenSize();
         }
-        vector<Tree*>childrens = curr->getChildren();
+        vector<Tree *> childrens = curr->getChildren();
         for (Tree *child : childrens) { // push children to queue
             childrenQueue.push(child);
-            cout << (*child).getNode() << " pushed" << endl;
         }
     }
     return maxDegNode;

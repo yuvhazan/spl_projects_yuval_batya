@@ -99,9 +99,7 @@ Session::~Session() {
 void Session::simulate() {
     cout << "simulate" << endl;
     Tree *root = g.bfs(*this, 0);
-    cout << "tree type is " << treeType << endl;
-    cout << "pleas it will be one : " << root->traceTree() << "!!!!!!!!!" << endl;
-    cout << "done bfs for 0!!!!" << endl;
+    cout << "trace: " << root->traceTree() << endl;
 }
 
 void Session::addAgent(const Agent &agent) {
