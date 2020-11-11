@@ -7,6 +7,7 @@
 #include "Session.h"
 
 class Session;
+
 class Tree {
 public:
     Tree(int rootLabel);
@@ -30,7 +31,6 @@ public:
 
     virtual Tree *clone() const = 0;
 
-
     static Tree *createTree(const Session &session, int rootLabel);
 
     virtual int traceTree() = 0;
@@ -41,13 +41,17 @@ public:
         return children.size();
     }
 
-    std:: vector<Tree*> getChildren() const{
+    std::vector<Tree *> getChildren() const {
         return children;
     }
 
 protected:
+    //fields
     int node;
     std::vector<Tree *> children;
+
+private:
+    void clearChildren();
 };
 
 class CycleTree : public Tree {

@@ -4,12 +4,19 @@ using json = nlohmann::json;
 using namespace std;
 
 Session::Session(const std::string &path) : g(vector<vector<int >>()), currCycle(0) {
+    initFieldsFromJson(path);
+}
+
+void Session::initFieldsFromJson(const std::string &path) {
+    //read json
     ifstream i(path);
     json j;
     i >> j;
 
+    //graph init
     g = Graph(j["graph"]);
 
+    //agents init
     for (const auto &agent:j["agents"]) {
         string agentType(agent[0]);
         if (agentType == "V") {
@@ -20,7 +27,7 @@ Session::Session(const std::string &path) : g(vector<vector<int >>()), currCycle
             agents.push_back(new ContactTracer());
     }
 
-
+    //treeType init
     string type = j["tree"];
     if (type == "M") {
         treeType = MaxRank;
@@ -42,15 +49,14 @@ Session::Session(const Session &other) :
 //copy assignment operator
 const Session &Session::operator=(const Session &other) {
     if (this != &other) {
+        // copy values of other
         g = other.g;
         treeType = other.treeType;
         infected = other.infected;
         currCycle = other.currCycle;
 
         //delete current agents
-        for (Agent *agent: agents)
-            delete (agent);
-        agents.clear();
+        clearAgents();
 
         //copy other's agents
         for (const auto agent: other.agents) {
@@ -71,6 +77,7 @@ Session::Session(Session &&other)
 
 //move assignment operator
 const Session &Session::operator=(Session &&other) {
+    // copy values of other
     g = other.g;
     treeType = other.treeType;
     infected = other.infected;
@@ -78,9 +85,7 @@ const Session &Session::operator=(Session &&other) {
 
 
     //delete current agents
-    for (auto agent: agents)
-        delete (agent);
-    agents.clear();
+    clearAgents();
 
     for (auto &agent:other.agents) {
         agents.push_back(agent);
@@ -92,20 +97,23 @@ const Session &Session::operator=(Session &&other) {
 
 //destructor
 Session::~Session() {
-    for (auto agent : agents) {
+    for (Agent* agent : agents) {
         delete (agent);
     }
     agents.clear();
 }
 
 void Session::simulate() {
-    while (!g.isSatisfied()) {
-        size_t sizeOfCycle(agents.size());
-        for (size_t i(0); i < sizeOfCycle; i++)
-            agents[i]->act(*this);
-        currCycle++;
-    }
+    while (!g.isSatisfied())
+        circle();
     this->writeToJson();
+}
+
+void Session::circle() {
+    size_t sizeOfCycle(agents.size());
+    for (size_t i(0); i < sizeOfCycle; i++)
+        agents[i]->act(*this);
+    currCycle++;
 }
 
 void Session::addAgent(const Agent &agent) {
@@ -148,7 +156,13 @@ void Session::writeToJson() {
     j["graph"] = g.getEdges();
     j["infected"] = g.getInfected();
     ofstream o("output.json");
-    o << j ;
+    o << j;
+}
+
+void Session::clearAgents() {
+    for (Agent *agent: agents)
+        delete (agent);
+    agents.clear();
 }
 
 

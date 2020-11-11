@@ -34,9 +34,7 @@ const Tree &Tree::operator=(const Tree &other) {
         node = other.node;
 
         //delete current children
-        for (auto child: children)
-            delete (child);
-        children.clear();
+        clearChildren();
 
         //copy other's children
         for (const auto child: other.children) {
@@ -57,10 +55,8 @@ Tree::Tree(Tree &&other) : node(other.node) {
 const Tree &Tree::operator=(Tree &&other) {
     node = other.node;
 
-    //delete current agents
-    for (auto child: children)
-        delete (child);
-    children.clear();
+    //delete current children
+    clearChildren();
 
     for (auto &child: other.children) {
         children.push_back(child);
@@ -123,7 +119,9 @@ int MaxRankTree::traceTree() {
             deg = curr->getChildrenSize();
         }
         vector<Tree *> childrens = curr->getChildren();
-        for (Tree *child : childrens) { // push children to queue
+
+        // push children to queue
+        for (Tree *child : childrens) {
             childrenQueue.push(child);
         }
     }
@@ -136,4 +134,10 @@ int RootTree::traceTree() {
 
 void Tree::addChild(const Tree &child) {
     children.push_back(child.clone());
+}
+
+void Tree::clearChildren() {
+    for (auto child: children)
+        delete (child);
+    children.clear();
 }

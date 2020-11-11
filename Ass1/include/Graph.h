@@ -11,6 +11,8 @@ class Session;
 using namespace std;
 
 enum NodeState {
+    // NodeState represents the condition of a node
+    // Healthy = "white" , Carry="yellow" Infected="red"
     Healthy,
     Carry,
     Infected
@@ -39,14 +41,22 @@ public:
 
     vector<vector<int>> getEdges();
 
-    vector<int>getInfected();
+    vector<int> getInfected();
+
+    bool containEdge(int v1, int v2);
+
+    void removeEdge(int v1, int v2);
+
+    void addToInfectedOutput(int v);
 
 private:
-    vector <std::vector<int>> edges;
+    vector<std::vector<int>> edges;
 
     vector<int> getNeighborsSorted(int v);
 
     std::vector<NodeState> states;
+
+    vector<int> outputInfectedList;
 };
 
 #endif

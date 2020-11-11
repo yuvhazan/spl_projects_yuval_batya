@@ -6,8 +6,9 @@ Virus::Virus(int nodeInd) : Agent(), nodeInd(nodeInd) {};
 
 void Virus::act(Session &session) {
     Graph currGraph = session.getGraph();
-    if (!currGraph.isInfected(nodeInd)) {
+    if (!currGraph.isInfected(nodeInd)) { // in first act of virus if condition commands will run
         currGraph.setState(nodeInd, Infected);
+        currGraph.addToInfectedOutput(nodeInd);
         session.enqueueInfected(nodeInd);
     }
     int nodeToInfect = currGraph.getMinHealthy(nodeInd);

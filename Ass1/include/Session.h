@@ -21,7 +21,6 @@ enum TreeType {
 };
 
 
-
 class Session {
 public:
 
@@ -62,14 +61,18 @@ public:
 
     void writeToJson();
 
-
-
 private:
+    //fields
     Graph g;
     TreeType treeType;
     std::vector<Agent *> agents;
     std::queue<int> infected;
     int currCycle;
+
+    //methods
+    void clearAgents();
+    void initFieldsFromJson(const std::string &path);
+    void circle();
 };
 
 #endif
